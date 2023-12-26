@@ -1,2 +1,2 @@
 # OS
- Belirli komutları yerine getirebilen bir 8086 tabanlı işletim sistemi.
+ Belirli komutları yerine getirebilen, 8086 tabanlı bir işletim sistemi.
