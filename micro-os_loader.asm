@@ -166,14 +166,13 @@ print_string endp
 
                        
                        
-                       
+                              
 ;==== data section =====================
 
-msg  db "Loading...",0Dh,0Ah, 0 
+msg  db "Y", 81h, "kleniyor..." ,0Dh,0Ah, 0 
      
-err  db "invalid data at sector: 2, cylinder: 0, head: 0 - integrity check failed.", 0Dh,0Ah
-     db "refer to tutorial 11 - making your own operating system.", 0Dh,0Ah
-     db "System will reboot now. Press any key...", 0
+err  db "Sekt",94h,"r 2'de ge",87h,"ersiz veri,"," silindir: 0,"," ba",9Fh," : 0"," - b",81h,"t",81h,"nl",81h,"k kontrol",81h," ba",9Fh,"ar",8Dh,"s",8Dh,"z oldu.", 0Dh, 0Ah
+     db "Sistem yeniden ba",9Fh,"lat",8Dh,"lacak."," Herhangi bir tu",9Fh,"a bas",8Dh,"n",8Dh,"z...", 0
     
 ;======================================
 
