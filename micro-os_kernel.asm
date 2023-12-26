@@ -119,7 +119,7 @@ jmp start
 ;==== data section =====================
 
 ; welcome message:
-msg  db "Welcome to micro-os!", 0 
+msg  db "Micro-os'a ho",9Fh," geldiniz!", 0 
 
 cmd_size        equ 10    ; size of command_buffer
 command_buffer  db cmd_size dup("b")
@@ -138,16 +138,16 @@ cexit_tail:
 creboot  db "reboot", 0
 creboot_tail:
 
-help_msg db "Thank you for choosing micro-os!", 0Dh,0Ah
-         db "The short list of supported commands:", 0Dh,0Ah
-         db "help   - print out this list.", 0Dh,0Ah
-         db "cls    - clear the screen.", 0Dh,0Ah
-         db "reboot - reboot the machine.", 0Dh,0Ah
-         db "quit   - same as reboot.", 0Dh,0Ah 
-         db "exit   - same as quit.", 0Dh,0Ah
-         db "more to come!", 0Dh,0Ah, 0
+help_msg db "Micro-os'u se",87h,"ti",0A7h,"iniz i",87h,"in te",9Fh,"ekk",9Ah,"rler!", 0Dh, 0Ah
+         db "Komutlar",8Dh,"n k",8Dh,"sa listesi:", 0Dh, 0Ah     
+         db "help   - bu listeyi ekrana yazd",8Dh,"r",8Dh,"r.", 0Dh, 0Ah
+         db "cls    - ekran",8Dh," temizle.", 0Dh, 0Ah
+         db "reboot - makineyi yeniden ba",9Fh,"lat",8Dh,"r.", 0Dh, 0Ah         
+         db "quit   - reboot komutuyla ayn",8Dh,".", 0Dh, 0Ah
+         db "exit   - quit komutuyla ayn",8Dh,".", 0Dh, 0Ah, 0
+ 
 
-unknown  db "unknown command: " , 0    
+unknown  db "bilinmeyen komut: " , 0    
 
 ;======================================
 
