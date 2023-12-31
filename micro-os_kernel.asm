@@ -126,26 +126,37 @@ command_buffer  db cmd_size dup("b")
 clean_str       db cmd_size dup(" "), 0
 prompt          db ">", 0
 
+HOUR     DW 1 DUP (?)
+MINUTE   DW 1 DUP (?)
+
 ; commands:
 chelp    db "help", 0
 chelp_tail:
 ccls     db "cls", 0
-ccls_tail:
+ccls_tail:          
+
+ctime   db "time", 0
+ctime_tail:
+
 cquit    db "quit", 0
 cquit_tail:
 cexit    db "exit", 0
 cexit_tail:
 creboot  db "reboot", 0
-creboot_tail:
+creboot_tail:    
 
 help_msg db "Micro-os'u se",87h,"ti",0A7h,"iniz i",87h,"in te",9Fh,"ekk",9Ah,"rler!", 0Dh, 0Ah
          db "Komutlar",8Dh,"n k",8Dh,"sa listesi:", 0Dh, 0Ah     
          db "help   - bu listeyi ekrana yazd",8Dh,"r",8Dh,"r.", 0Dh, 0Ah
-         db "cls    - ekran",8Dh," temizle.", 0Dh, 0Ah
+         db "time   - saati ekrana yazd",8Dh,"r",8Dh,"r.", 0Dh, 0Ah         
+         db "cls    - ekran",8Dh," temizler.", 0Dh, 0Ah
          db "reboot - makineyi yeniden ba",9Fh,"lat",8Dh,"r.", 0Dh, 0Ah         
          db "quit   - reboot komutuyla ayn",8Dh,".", 0Dh, 0Ah
          db "exit   - quit komutuyla ayn",8Dh,".", 0Dh, 0Ah, 0
- 
+
+         
+time_msg db "Saat: ", 0 
+
 
 unknown  db "bilinmeyen komut: " , 0    
 
@@ -259,12 +270,22 @@ je      help_command
 ; compare command buffer with 'cls'
 lea     si, command_buffer
 mov     cx, ccls_tail - offset ccls  ; size of ['cls',0] string.
-lea     di, ccls
+lea     di, ccls                     
 repe    cmpsb
 jne     not_cls
 jmp     cls_command
 not_cls:
+   
+; compare command buffer with 'time'
+lea     si, command_buffer
+mov     cx, ctime_tail - offset ctime   ; size of ['time',0] string.
+lea     di, ctime
+repe    cmpsb
+je      time_command 
 
+
+ 
+ 
 ; compare command buffer with 'quit'
 lea     si, command_buffer
 mov     cx, cquit_tail - offset cquit ; size of ['quit',0] string.
@@ -343,15 +364,37 @@ jmp     processed
 
 
 
-
 ; +++++ 'cls' command ++++++
 cls_command:
 call    clear_screen
+jmp     processed 
+
+
+
+; +++++ 'time' command ++++++
+time_command:
+
+; scroll text area 2 lines up:
+mov     al, 2
+call    scroll_t_area
+
+; set cursor position 2 lines
+; above prompt line:
+mov     ax, 40h
+mov     es, ax
+mov     al, es:[84h]
+sub     al, 2
+gotoxy  0, al
+
+lea     si, time_msg
+call    print_string
+
+call    get_time
+
+mov     al, 1
+call    scroll_t_area
+
 jmp     processed
-
-
-
-
 
 
 
@@ -543,6 +586,85 @@ clear_screen proc near
 
         ret
 clear_screen endp
+            
+            
 
+get_time proc near
+        push    ax
+        push    bx
+        push    cx
+        push    dx
+    
+        mov     ah, 00h
+        
+        int     1Ah     ; time interrupt
+        
+        mov     [HOUR], cx  ; set HOUR in memory    
+                           
 
+                           
+        mov     ax, dx  ; total clock ticks per second
+                        
+        xor     dx, dx
+        mov     bx, 12h ; divisor: 18 
+        div     bx      ; find second, (total ticks / 18)
+        sub     ax, 0Fh ; second lag fixed                   
+                           
+        xor     dx, dx                    
+        mov     bx, 3Ch ; divisor: 60
+        div     bx      ; find minute (second / 60)  
+        
+        mov     [MINUTE], ax  ; set MINUTE in memory
+        
+        
+        
+        mov     ax, [HOUR]
+        
+        xor     dx, dx  ; quick reset dx
+        mov     bx, 0Ah ; splits the HOUR
+        div     bx      ; HOUR / 10
+        
+        add     al, '0' ; ascii convertor, current al ascii + 30h ('0')
+        
+        mov     ah, 0Eh
+        int     10h     ; print HOUR[0]
+        
+        
+        mov     ax, dx  ; move remainder (HOUR[0]) to ax
+        add     al, '0' ; convertor ascii, current al ascii + 30h ('0')
+        
+        mov     ah, 0Eh
+        int     10h     ; print HOUR[1]
+        
+        
+        mov     al, ':'
+        mov     ah, 0Eh
+        int     10h
+        
+        
+        mov     ax, [MINUTE]
+        
+        xor     dx, dx  ; quick reset dx
+        mov     bx, 0Ah ; splits the MINUTE
+        div     bx      ; MINUTE / 10
+        
+        add     al, '0' ; ascii convertor, current al ascii + 30h ('0')
+        
+        mov     ah, 0Eh
+        int     10h     ; print MINUTE[0]
+                                                          
+                                                         
+        mov     ax, dx  ; move remainder (MINUTE[1]) to ax
+        add     al, '0' ; convertor ascii, current al ascii + 30h ('0') 
+             
+        mov     ah, 0Eh
+        int     10h     ; print MINUTE[1]
+        
+        pop     dx
+        pop     cx
+        pop     bx
+        pop     ax
+                                                           
+        ret
+get_time endp          
 
