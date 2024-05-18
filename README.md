@@ -11,19 +11,19 @@ Komutlar:
   
     time      : Ekrana, saati yazdırır.
   
-  initcap   : Girilen cümlenin baş harflerini büyütür.
+    initcap   : Girilen cümlenin baş harflerini büyütür.
   
-  star      : Ekrana yıldız çizdirir.
+    star      : Ekrana yıldız çizdirir.
   
-  authors   : İşletim sistemini oluştran kişinin ismini yazdırır.
+    authors   : İşletim sistemini oluştran kişinin ismini yazdırır.
 
   
-  cls       : Ekranı temizler.
+    cls       : Ekranı temizler.
   
-  reboot    : Makineyi yeniden başlatır.    
+    reboot    : Makineyi yeniden başlatır.    
   
-  quit      : Reboot komutuyla aynı işlevi yapar.
+    quit      : Reboot komutuyla aynı işlevi yapar.
   
-  exit      : Quit komutuyla aynı işlevi yapar.
+    exit      : Quit komutuyla aynı işlevi yapar.
 
 ----------------------------------------------------------------------
