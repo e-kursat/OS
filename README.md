@@ -6,9 +6,13 @@ initcap komutu Türkçe karakter alabilmektedir.
 
 Komutlar:
   help      : Komutların bulunduğu listeyi ekrana yazdırır.
+  
   time      : Ekrana, saati yazdırır.
-  initcap   : Girilen cümlenin baş harflerini büyütür.\n
+  
+  initcap   : Girilen cümlenin baş harflerini büyütür.
+  
   star      : Ekrana yıldız çizdirir.
+  
   authors   : İşletim sistemini oluştran kişinin ismini yazdırır.
   
   cls       : Ekranı temizler.
