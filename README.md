@@ -5,7 +5,7 @@ Bu mikro işletim sisteminin panelindeki yazılar Türkçedir.
 initcap komutu Türkçe karakter alabilmektedir.
 
 ----------------------------------------------------------------------
-Komutlar:
+    Komutlar:
 
     help      : Komutların bulunduğu listeyi ekrana yazdırır.
   
