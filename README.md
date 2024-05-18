@@ -7,9 +7,9 @@ initcap komutu Türkçe karakter alabilmektedir.
 ----------------------------------------------------------------------
 Komutlar:
 
-  help      : Komutların bulunduğu listeyi ekrana yazdırır.
+    help      : Komutların bulunduğu listeyi ekrana yazdırır.
   
-  time      : Ekrana, saati yazdırır.
+    time      : Ekrana, saati yazdırır.
   
   initcap   : Girilen cümlenin baş harflerini büyütür.
   
