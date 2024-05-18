@@ -4,6 +4,7 @@ Belirli komutları yerine getirebilen, 8086 tabanlı bir işletim sistemi.
 Bu mikro işletim sisteminin panelindeki yazılar Türkçedir.
 initcap komutu Türkçe karakter alabilmektedir.
 
+
 Komutlar:
   help      : Komutların bulunduğu listeyi ekrana yazdırır.
   
